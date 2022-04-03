@@ -25,6 +25,7 @@ import y.web.rest.errors.BadRequestAlertException;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin( origins = "*")
 public class LivreResource {
 
     private final Logger log = LoggerFactory.getLogger(LivreResource.class);
