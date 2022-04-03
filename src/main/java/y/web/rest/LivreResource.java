@@ -23,9 +23,11 @@ import y.repository.LivreRepository;
 import y.service.LivreService;
 import y.web.rest.errors.BadRequestAlertException;
 
+/**
+ * REST controller for managing {@link y.domain.Livre}.
+ */
 @RestController
 @RequestMapping("/api")
-@CrossOrigin( origins = "*")
 public class LivreResource {
 
     private final Logger log = LoggerFactory.getLogger(LivreResource.class);
@@ -44,7 +46,13 @@ public class LivreResource {
         this.livreRepository = livreRepository;
     }
 
-
+    /**
+     * {@code POST  /livres} : Create a new livre.
+     *
+     * @param livre the livre to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new livre, or with status {@code 400 (Bad Request)} if the livre has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
     @PostMapping("/livres")
     public ResponseEntity<Livre> createLivre(@RequestBody Livre livre) throws URISyntaxException {
         log.debug("REST request to save Livre : {}", livre);
@@ -58,7 +66,16 @@ public class LivreResource {
             .body(result);
     }
 
-
+    /**
+     * {@code PUT  /livres/:id} : Updates an existing livre.
+     *
+     * @param id the id of the livre to save.
+     * @param livre the livre to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated livre,
+     * or with status {@code 400 (Bad Request)} if the livre is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the livre couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
     @PutMapping("/livres/{id}")
     public ResponseEntity<Livre> updateLivre(@PathVariable(value = "id", required = false) final Long id, @RequestBody Livre livre)
         throws URISyntaxException {
@@ -81,7 +98,17 @@ public class LivreResource {
             .body(result);
     }
 
-
+    /**
+     * {@code PATCH  /livres/:id} : Partial updates given fields of an existing livre, field will ignore if it is null
+     *
+     * @param id the id of the livre to save.
+     * @param livre the livre to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated livre,
+     * or with status {@code 400 (Bad Request)} if the livre is not valid,
+     * or with status {@code 404 (Not Found)} if the livre is not found,
+     * or with status {@code 500 (Internal Server Error)} if the livre couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
     @PatchMapping(value = "/livres/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Livre> partialUpdateLivre(@PathVariable(value = "id", required = false) final Long id, @RequestBody Livre livre)
         throws URISyntaxException {
@@ -105,6 +132,12 @@ public class LivreResource {
         );
     }
 
+    /**
+     * {@code GET  /livres} : get all the livres.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of livres in body.
+     */
     @GetMapping("/livres")
     public ResponseEntity<List<Livre>> getAllLivres(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Livres");
@@ -113,7 +146,12 @@ public class LivreResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
-
+    /**
+     * {@code GET  /livres/:id} : get the "id" livre.
+     *
+     * @param id the id of the livre to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the livre, or with status {@code 404 (Not Found)}.
+     */
     @GetMapping("/livres/{id}")
     public ResponseEntity<Livre> getLivre(@PathVariable Long id) {
         log.debug("REST request to get Livre : {}", id);
@@ -121,7 +159,12 @@ public class LivreResource {
         return ResponseUtil.wrapOrNotFound(livre);
     }
 
-
+    /**
+     * {@code DELETE  /livres/:id} : delete the "id" livre.
+     *
+     * @param id the id of the livre to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
     @DeleteMapping("/livres/{id}")
     public ResponseEntity<Void> deleteLivre(@PathVariable Long id) {
         log.debug("REST request to delete Livre : {}", id);

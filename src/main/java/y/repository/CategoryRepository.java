@@ -2,11 +2,11 @@ package y.repository;
 
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
-import y.domain.Livre;
+import y.domain.Category;
 
 /**
- * Spring Data SQL repository for the Livre entity.
+ * Spring Data SQL repository for the Category entity.
  */
 @SuppressWarnings("unused")
 @Repository
-public interface LivreRepository extends JpaRepository<Livre, Long> {}
+public interface CategoryRepository extends JpaRepository<Category, Long> {}

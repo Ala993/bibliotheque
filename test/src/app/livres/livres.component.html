@@ -1,0 +1,21 @@
+
+
+
+<div class="container">
+    <button class="btn btn-primary float-right"  style="margin-bottom: 20px; margin-top: 20px;" (click)="goToCreatePage()">Ajouter un livre</button>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Author</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let  livre of livres">
+                <td>{{livre.name}}</td>
+                <td>{{livre.author}}</td>
+              </tr>
+          </tbody>
+    </table>
+    
+</div>

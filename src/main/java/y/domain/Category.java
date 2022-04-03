@@ -6,12 +6,12 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
- * A Livre.
+ * A Category.
  */
 @Entity
-@Table(name = "livre")
+@Table(name = "category")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Livre implements Serializable {
+public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,19 +23,13 @@ public class Livre implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "author")
-    private String author;
-
-    @Column(name = "category")
-    private Category category;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
         return this.id;
     }
 
-    public Livre id(Long id) {
+    public Category id(Long id) {
         this.setId(id);
         return this;
     }
@@ -48,39 +42,13 @@ public class Livre implements Serializable {
         return this.name;
     }
 
-    public Livre name(String name) {
+    public Category name(String name) {
         this.setName(name);
         return this;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAuthor() {
-        return this.author;
-    }
-
-    public Livre author(String author) {
-        this.setAuthor(author);
-        return this;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public Category getCategory() {
-        return this.category;
-    }
-
-    public Livre category(Category category) {
-        this.setCategory(category);
-        return this;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -90,10 +58,10 @@ public class Livre implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Livre)) {
+        if (!(o instanceof Category)) {
             return false;
         }
-        return id != null && id.equals(((Livre) o).id);
+        return id != null && id.equals(((Category) o).id);
     }
 
     @Override
@@ -105,11 +73,9 @@ public class Livre implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "Livre{" +
+        return "Category{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", author='" + getAuthor() + "'" +
-            ", category='" + getCategory() + "'" +
             "}";
     }
 }
