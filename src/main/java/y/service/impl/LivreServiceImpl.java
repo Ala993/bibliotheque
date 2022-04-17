@@ -45,9 +45,6 @@ public class LivreServiceImpl implements LivreService {
                 if (livre.getAuthor() != null) {
                     existingLivre.setAuthor(livre.getAuthor());
                 }
-                if (livre.getCategory() != null) {
-                    existingLivre.setCategory(livre.getCategory());
-                }
 
                 return existingLivre;
             })

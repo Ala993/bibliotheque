@@ -11,7 +11,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "student")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Student implements Serializable {
+public class Student extends Emprunter implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

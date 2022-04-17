@@ -26,7 +26,7 @@ public class Livre implements Serializable {
     @Column(name = "author")
     private String author;
 
-    @Column(name = "category")
+    @ManyToOne
     private Category category;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -74,13 +74,13 @@ public class Livre implements Serializable {
         return this.category;
     }
 
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public Livre category(Category category) {
         this.setCategory(category);
         return this;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -109,7 +109,6 @@ public class Livre implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", author='" + getAuthor() + "'" +
-            ", category='" + getCategory() + "'" +
             "}";
     }
 }

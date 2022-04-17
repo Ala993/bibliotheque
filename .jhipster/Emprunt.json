@@ -1,0 +1,30 @@
+{
+  "changelogDate": "20220416235406",
+  "dto": "no",
+  "fields": [
+    {
+      "fieldName": "start",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "end",
+      "fieldType": "Instant"
+    }
+  ],
+  "jpaMetamodelFiltering": false,
+  "name": "Emprunt",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "id": false,
+      "otherEntityField": "id",
+      "otherEntityName": "livre",
+      "otherEntityRelationshipName": "emprunt",
+      "ownerSide": true,
+      "relationshipName": "livre",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

@@ -18,7 +18,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import y.IntegrationTest;
-import y.domain.Category;
 import y.domain.Livre;
 import y.repository.LivreRepository;
 
@@ -35,9 +34,6 @@ class LivreResourceIT {
 
     private static final String DEFAULT_AUTHOR = "AAAAAAAAAA";
     private static final String UPDATED_AUTHOR = "BBBBBBBBBB";
-
-    private static final String DEFAULT_CATEGORY = "AAAAAAAAAA";
-    private static final String UPDATED_CATEGORY = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/livres";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -63,7 +59,7 @@ class LivreResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Livre createEntity(EntityManager em) {
-        Livre livre = new Livre().name(DEFAULT_NAME).author(DEFAULT_AUTHOR).category(new Category());
+        Livre livre = new Livre().name(DEFAULT_NAME).author(DEFAULT_AUTHOR);
         return livre;
     }
 
@@ -74,7 +70,8 @@ class LivreResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Livre createUpdatedEntity(EntityManager em) {
-  return  null;
+        Livre livre = new Livre().name(UPDATED_NAME).author(UPDATED_AUTHOR);
+        return livre;
     }
 
     @BeforeEach
@@ -97,7 +94,6 @@ class LivreResourceIT {
         Livre testLivre = livreList.get(livreList.size() - 1);
         assertThat(testLivre.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testLivre.getAuthor()).isEqualTo(DEFAULT_AUTHOR);
-        assertThat(testLivre.getCategory()).isEqualTo(DEFAULT_CATEGORY);
     }
 
     @Test
@@ -131,8 +127,7 @@ class LivreResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(livre.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].author").value(hasItem(DEFAULT_AUTHOR)))
-            .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY)));
+            .andExpect(jsonPath("$.[*].author").value(hasItem(DEFAULT_AUTHOR)));
     }
 
     @Test
@@ -148,8 +143,7 @@ class LivreResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(livre.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.author").value(DEFAULT_AUTHOR))
-            .andExpect(jsonPath("$.category").value(DEFAULT_CATEGORY));
+            .andExpect(jsonPath("$.author").value(DEFAULT_AUTHOR));
     }
 
     @Test
@@ -171,7 +165,7 @@ class LivreResourceIT {
         Livre updatedLivre = livreRepository.findById(livre.getId()).get();
         // Disconnect from session so that the updates on updatedLivre are not directly saved in db
         em.detach(updatedLivre);
-
+        updatedLivre.name(UPDATED_NAME).author(UPDATED_AUTHOR);
 
         restLivreMockMvc
             .perform(
@@ -187,7 +181,6 @@ class LivreResourceIT {
         Livre testLivre = livreList.get(livreList.size() - 1);
         assertThat(testLivre.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testLivre.getAuthor()).isEqualTo(UPDATED_AUTHOR);
-        assertThat(testLivre.getCategory()).isEqualTo(UPDATED_CATEGORY);
     }
 
     @Test
@@ -258,7 +251,7 @@ class LivreResourceIT {
         Livre partialUpdatedLivre = new Livre();
         partialUpdatedLivre.setId(livre.getId());
 
-
+        partialUpdatedLivre.author(UPDATED_AUTHOR);
 
         restLivreMockMvc
             .perform(
@@ -274,7 +267,6 @@ class LivreResourceIT {
         Livre testLivre = livreList.get(livreList.size() - 1);
         assertThat(testLivre.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testLivre.getAuthor()).isEqualTo(UPDATED_AUTHOR);
-        assertThat(testLivre.getCategory()).isEqualTo(UPDATED_CATEGORY);
     }
 
     @Test
@@ -289,7 +281,7 @@ class LivreResourceIT {
         Livre partialUpdatedLivre = new Livre();
         partialUpdatedLivre.setId(livre.getId());
 
-
+        partialUpdatedLivre.name(UPDATED_NAME).author(UPDATED_AUTHOR);
 
         restLivreMockMvc
             .perform(
@@ -305,7 +297,6 @@ class LivreResourceIT {
         Livre testLivre = livreList.get(livreList.size() - 1);
         assertThat(testLivre.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testLivre.getAuthor()).isEqualTo(UPDATED_AUTHOR);
-        assertThat(testLivre.getCategory()).isEqualTo(UPDATED_CATEGORY);
     }
 
     @Test
